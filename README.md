@@ -42,7 +42,7 @@
 
 ## 결과물
 - 이미지 파일과 해당 이미지에 대한 해시태그는 JSON 파일로 저장됩니다. 파일명은 입력한 해시태그와 동일합니다.
-    - 예: `data/your_hashtag.json` / `data/your_hashtag.jpg`
+    - 예: `data/your_hashtag.json`, `data/your_hashtag.jpg`
 
 
 
