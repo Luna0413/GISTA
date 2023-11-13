@@ -3,6 +3,8 @@
 ## 개요
 이 프로그램은 Instagram에서 지정한 해시태그의 이미지를 크롤링하는 스크립트입니다. Selenium과 BeautifulSoup을 사용하여 Instagram에 로그인하고, 특정 해시태그로 검색하여 이미지를 수집합니다.
 
+크롤러에서의 데이터 수집은 리눅스 서버 환경이 아닌 윈도우 로컬 환경에서 수집하도록 설계되었습니다.
+
 ## requirement 설치
 
     pip install -r requirement.txt
