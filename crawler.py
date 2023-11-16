@@ -25,7 +25,7 @@ def download_image(url, local_filename):
 
 
 # 크롬드라이브 경로 설정
-driver = webdriver.Chrome(executable_path="C:\\Users\\doohk\\Downloads\\chromedriver-win64\\chromedriver.exe")
+driver = webdriver.Chrome(executable_path="C:/your/chromedriver/path/chromedriver.exe")
 
 #------------------------------로그인----------------------------------------
 driver.get("https://www.instagram.com/accounts/login/")
@@ -41,9 +41,9 @@ except Exception as e:
 
 # username, password 자신의 아이디 비밀번호로 사용
 u_input = driver.find_element_by_name('username')
-u_input.send_keys('gistcrawl')
+u_input.send_keys('user_id')
 p_input = driver.find_element_by_name('password')
-p_input.send_keys('gist2023@')
+p_input.send_keys('user_password')
 
 login_btn = driver.find_element_by_css_selector('button[type="submit"]')
 login_btn.click()
