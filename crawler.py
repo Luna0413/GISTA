@@ -25,7 +25,7 @@ def download_image(url, local_filename):
 
 
 # 크롬드라이브 경로 설정
-driver = webdriver.Chrome(executable_path="your/chromedriver/path/chromedriver.exe")
+driver = webdriver.Chrome(executable_path="C:\\Users\\doohk\\Downloads\\chromedriver-win64\\chromedriver.exe")
 
 #------------------------------로그인----------------------------------------
 driver.get("https://www.instagram.com/accounts/login/")
@@ -41,9 +41,9 @@ except Exception as e:
 
 # username, password 자신의 아이디 비밀번호로 사용
 u_input = driver.find_element_by_name('username')
-u_input.send_keys('your_id')
+u_input.send_keys('gistcrawl')
 p_input = driver.find_element_by_name('password')
-p_input.send_keys('your_password')
+p_input.send_keys('gist2023@')
 
 login_btn = driver.find_element_by_css_selector('button[type="submit"]')
 login_btn.click()
@@ -79,7 +79,7 @@ with open('output.html', 'w', encoding='utf-8') as file:
 
 # 이미지 태그의 클래스를 추출
 img_elements = soup.find_all('img', {'alt': True, 'src': True}) 
-
+target_links = soup.find_all('a', class_=["x1a2a7pz", "_a6hd"])
 output = {} # (src : hashtag) 딕셔너리
 
 # 추출된 이미지 태그의 클래스
@@ -97,6 +97,48 @@ for i, image in enumerate(img_elements[2:]):
     print(hashtags)
     print("")
     
+k = 1
+for a in target_links:
+    href = a['href']
+    if href and href.startswith('/p/'):
+        local_filename = tag + str(k) + ".jpg"
+        driver.get("https://www.instagram.com"+ href)
+        try:
+            button_element = WebDriverWait(driver, 2).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, 'div.x1i10hfl.xjbqb8w.x6umtig.x1b1mbwd.xaqea5y.xav7gou.x9f619.x1ypdohk.xt0psk2.xe8uvvx.xdj266r.x11i5rnm.xat24cr.x1mh8g0r.xexx8yu.x4uap5.x18d9i69.xkhd6sd.x16tdsg8.x1hl2dhg.xggy1nq.x1a2a7pz.x87ps6o.x1d5wrs8[role="button"]'))
+            )
+            button_element.click()
+            print("Button Clicked!")
+            time.sleep(0.5)
+            try:
+                elements_with_aa9_class = WebDriverWait(driver, 2).until(
+                EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'a._aa9_'))
+                )
+
+                comment_hashtag = []
+                for element in elements_with_aa9_class:
+                    text_content = element.text
+                    
+                    if text_content.startswith('#'):
+                        comment_hashtag.append(text_content)
+                        print(text_content)
+
+                output[local_filename] = comment_hashtag
+  
+
+            except Exception as e:
+                print(f"Error: {e}")
+
+
+        except Exception as e:
+            print(f"Error: {e}")
+
+        print(local_filename)
+        print(output[local_filename])
+        k += 1
+
+
+
     
 with open('data/'+tag+'.json', 'w') as json_file:
     json.dump(output, json_file)
